@@ -1,7 +1,7 @@
 open System
 open System.IO
 
-let input = File.ReadAllLines("input/day1.txt")
+let input = File.ReadAllLines("input/day01.txt")
 
 // read input as a (int * int)[]
 let lines =
