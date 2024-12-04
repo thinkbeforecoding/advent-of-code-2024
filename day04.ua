@@ -1,9 +1,9 @@
 # "MMMSXXMASM\nMSAMXMSMSA\nAMXSXMAAMM\nMSAMASMSMX\nXMASAMXAMM\nXXAMMXXAMA\nSMSMSASXSS\nSAXAMASAAA\nMAMMMXMMMM\nMXMXAXMASX"
 &fras "input/day04.txt"
 ⊜∘ ↧ ⊃(≠@\r)(≠@\n) . # parse input
-🎄  ← /+♭≡(⧈(↥⊃(≍ "XMAS")(≍ "SAMX")) 4)
-↪️ ← ⍉ ≡(↻) ⇡ ⧻. ≡(⍜⇌ (⊂"."))
-↩️ ← ⍉ ≡(↻¯) ⇡ ⧻. ≡(⍜⇌ (⊂"."))
+🎄  ← /+♭≡(⧈(↥∩(≍"XMAS")⟜⇌) 4)
+↪️ ← ⍉ ≡↻ ⇡⊸⧻ ≡(⍜⇌(⊂@.))
+↩️ ← ⍉ ≡↻ ¯⇡⊸⧻ ≡(⍜⇌(⊂@.))
 /+[⊃(🎄|🎄⍉|🎄↪️|🎄↩️)] .
 
 :
