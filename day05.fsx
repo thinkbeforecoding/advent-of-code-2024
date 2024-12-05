@@ -32,7 +32,25 @@ updates
 |> Array.map (fun update -> update[ update.Length/2])
 |> Array.sum
 
+
+
+let cmp p1 p2 =
+    match rules |> Array.tryFind(fun (x,y) -> (x=p1 && y=p2) || (x=p2 && y=p1)) with
+    | Some(x,y) ->
+        if p1 = x then
+            -1
+        else
+            1
+    | None -> 1
+
+
+
+
+
 updates
 |> Array.filter (fun update ->
     rules |> Array.exists (fun u -> not(validate update u))
 )
+|> Array.map(Array.sortWith cmp)
+|> Array.map (fun update -> update[ update.Length/2])
+|> Array.sum 
