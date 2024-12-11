@@ -36,6 +36,7 @@ let (++) (x1,y1) (x2,y2) = x1 + x2, y1+y2
 let (--) (x1,y1) (x2,y2) = x1 - x2, y1 - y2
 let (%%) (x,y) n = x/2,y/2 
 let inv (x,y) = -x,-y
+
 let antiFreqs a1 a2= 
     let v = (a2 -- a1)
     let af1 = a1 -- v
@@ -62,11 +63,21 @@ positions
 
 let rec untilOut p v=
     [ 
-        if not (p)
-
+        if isInMap p then
+            p
+            yield! untilOut (p++v) v
     ]
 
 let allNodes a1 a2 =
     let v = a2 -- a1
+    [ yield!  untilOut a2 (inv v)
+      yield! untilOut a1 v ]
 
 
+positions
+|> List.collect (fun (f , antenas) ->
+    allPairs antenas
+    |> List.collect (fun (a1, a2) ->
+            allNodes a1 a2)
+) |> List.distinct
+|> List.length
