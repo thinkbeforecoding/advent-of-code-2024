@@ -14,4 +14,4 @@ Count ← ⊙◌ /+ °⊟ ⍉ ⍥NextR
 P₁    ← Count25 ⍉⊟=..
 P₂    ← Count75 ⍉⊟=..
 
-⊃(P₂)(P₁) I
+[⊃P₁ P₂ I]

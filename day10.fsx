@@ -76,10 +76,6 @@ findHeads 0 []
 
 findHeads 0 [] 
 |> List.sumBy (trails >> snd ) 
-let stack = [3,0]
-let ends = 0
-let pos::tail = stack
-
 
 
     
