@@ -6,6 +6,10 @@ let input =
 let w = input.IndexOf '\n'
 let lw = w+1
 let h = input.Split('\n', StringSplitOptions.RemoveEmptyEntries).Length
+let plants = seq {
+    for y in 0 ..h-1 do
+        for x in 0..h-1 do
+            x,y }
 
 let toPos index = index % lw, index / lw
 let toIndex (x,y) = x + y * lw
@@ -29,14 +33,16 @@ let inline get p =
    else
         '.'
 
+let undefined = char 0
+
 /// A map with deduplicated chars
-let map  = Array.replicate  (lw*h) '\000'
+let map  = Array.replicate  (lw*h)  undefined
 
 let mget  p = 
     if inBounds p then
         map[toIndex p]
     else
-        '\000'
+        undefined
 let mset p v = map[toIndex p] <- v
 
 // place line ends (just for print)
@@ -51,7 +57,7 @@ let rec fill c v stack =
     match stack with
     | [] -> ()
     | p :: rest ->
-        if mget p <> '\000' then 
+        if mget p <> undefined then 
             // outside of the map, nothing to do
             fill c v rest
         else
@@ -69,7 +75,7 @@ let rec fill c v stack =
 
 // fills all areas that have not been filled yet (still contain char 0)
 let rec fillAll v =
-    match Array.tryFindIndex ((=) '\000') map with
+    match Array.tryFindIndex ((=) undefined) map with
     | Some i ->
         let p = toPos i
         fill (get p) v [p] 
@@ -107,11 +113,7 @@ let addIf cond c perimeters =
 
 // for each cell, look neigboors and increment perimeter in each direction if not same area
 let perimeters= 
-    let positions = seq {
-        for y in 0 ..h-1 do
-            for x in 0..h-1 do
-                x,y }
-    (Map.empty, positions)
+    (Map.empty, plants)
     ||> Seq.fold (fun perimeters p ->
             let c = mget p
             perimeters
@@ -170,7 +172,7 @@ let rec innerSides c start p dir borders neighbors =
         if c <> mget (p++l)  then
             // the area continues on the left, new border
             innerSides c start (p++l) l (borders+1) neighbors
-        elif c <> mget (p++dir) && mget(p++dir) <> '\000' then
+        elif c <> mget (p++dir) && mget(p++dir) <> undefined then
             // the border is straight 
             innerSides c start (p++dir) dir borders neighbors
         else 
@@ -180,11 +182,7 @@ let rec innerSides c start p dir borders neighbors =
 // find all neighbors for a given area
 let neighbors c =
     let neighbors = Set.empty
-    let positions = seq {
-        for y in 0 .. h do
-            for x in 0 ..w do 
-                x,y  }
-    (neighbors, positions)
+    (neighbors, plants)
     ||> Seq.fold (fun neighbors  p   ->
             if mget p = c then
                 neighbors
@@ -194,8 +192,8 @@ let neighbors c =
                 |> Set.add (mget (p++W))
             else
                 neighbors)
-    |> Set.remove('\000') 
-    |> Set.remove(c)
+    |> Set.remove undefined
+    |> Set.remove c
 
 // count total in side for area k (find unexplored holes in neighbors)
 let rec inSides k neighbors  total =
@@ -230,5 +228,4 @@ String map
 // Part 2
 areas.Keys
 |> Seq.sumBy (fun c ->
-    let s = sides c
-    s * areas[c])
+    sides c * areas[c])
