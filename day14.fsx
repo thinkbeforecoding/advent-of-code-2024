@@ -70,8 +70,14 @@ positions
 let canBeTree room n =
     let robotsOnLines=
         input |> Seq.map (futur room n) 
+        |> Seq.distinct
         |> Seq.countBy snd
-    robotsOnLines[0] = 1 && robotsOnLines[1] = 3 && robotsOnLines[2] = 5
+    let array = Array.zeroCreate (snd room)
+    for (y,c) in robotsOnLines do
+        array[y] <- c
+    let incBy2 = array |> Seq.pairwise |> Seq.map (fun (x,y) -> y-x) |> Seq.filter (fun x -> x=2) |> Seq.length
+    incBy2 > 50
+
 
 
 let drawRobots (rx,ry) n  =
@@ -83,5 +89,44 @@ let drawRobots (rx,ry) n  =
             else
                 printf "."
         printfn ""
+    
+// the drawing has a higher change to have a column with more than 20 robots
+let hasColumns n =  
+    input
+    |> Seq.map (futur room n)
+    |> Seq.countBy fst
+    |> Seq.exists (fun (x,c) -> c > 20)
 
-drawRobots room 21
+// the drawing has a higher change to have a line with more than 20 robots
+let hasLines n =  
+    input
+    |> Seq.map (futur room n)
+    |> Seq.countBy snd
+    |> Seq.exists (fun (y,c) -> c > 20)
+
+// if the easter egg appears at t, every 101s (the width of the room), all robots
+// will be at the same x than at t... just not at the same y.
+// we can find the 1st moment where they are in the right columns
+let tcols = Seq.initInfinite id |> Seq.find hasColumns
+// same thing for y every 103s. 
+let tlines = Seq.initInfinite id |> Seq.find hasLines 
+
+// we now the time of the easter egg has the following constraints:
+// t = tlines + x * h
+// t = tcols + x * w 
+// 
+// 0 = tlines-tcols + x * (h-w)
+// x = (tcols-tlines)/(h-w)
+let w = fst room
+let h = snd room
+let x = (tcols-tlines)/(h  - w) 
+let t = (tcols + x * w) %+ (w*h)  // the intersection is in the past, but it repeats every w*h seconds
+
+drawRobots room t
+
+
+// this version is more brute force
+let t2 = Seq.initInfinite id |> Seq.find (fun n ->  hasColumns n && hasLines n)
+
+
+drawRobots room t2
