@@ -32,7 +32,7 @@ let diffs (p: int seq) =
     p |> Seq.pairwise 
     |> Seq.map (fun (x,y) -> y-x, y) 
     |> Seq.windowed 4
-    |> Seq.map (function [| (a,_);(b,_);(c,_);(d,p) |] -> (a,b,c,d), p )
+    |> Seq.map (function [| (a,_);(b,_);(c,_);(d,p) |] -> (a,b,c,d), p | _ -> failwith "All windows should have 4 elements" )
 
 
 prices 123 |> Seq.pairwise |> Seq.map (fun (x,y) -> y-x)
