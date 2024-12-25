@@ -6,8 +6,10 @@ open FSharp.Text.RegexExtensions
 // today, we use regex to parse
 
 let input = IO.File.ReadAllText("input/day03.txt")
+// a regex to extract the arguments from uncorrupted mul instructions
 type Rx = Regex< @"mul\((?<l>\d{1,3}),(?<r>\d{1,3})\)" >
 
+// Find all matches, read inputs as int, and multiply them
 Rx().TypedMatches(input)
 |> Seq.sumBy (fun m ->
     let l = int m.l.AsInt
@@ -23,6 +25,7 @@ type Instruction =
     | Do
     | Dont
 
+// a regex to find do,don't and mul.
 type Rx2 = Regex< @"(?<do>do\(\))|(?<dont>don't\(\))|mul\((?<l>\d{1,3}),(?<r>\d{1,3})\)" >
 
 // parse all instructions in order
@@ -41,20 +44,32 @@ let parse input =
     |> Seq.toList
 
 // eval total sum keeping track of last do/don't
-let rec eval' enabled sum tokens =
+// enabled switch to true with do(), to false with don't(). controls whether we add the results
+// total is the running total
+// tokens is the list of remaining instructions
+let rec eval' enabled total tokens =
     match tokens with
-    | [] -> sum
+    | [] ->
+        // we reached the end of the tokens, total contains the result
+        total
     | Do :: rest ->
-        eval'  true sum rest
+        // we found a do() instruction,  continue in enabled mode
+        eval'  true total rest
     | Dont :: rest ->
-        eval'  false sum rest
+        // we found a don't() instruction, continue in disabled mode
+        eval'  false total rest
     | Mul(l,r) :: rest ->
+        // we found a mul(l,r) instruction,
+        // add it to total only if enabled
         if enabled then
-            eval' enabled (sum + l*r) rest
+            eval' enabled (total + l*r) rest
         else
-            eval' enabled sum rest
+            eval' enabled total rest
+
+// start in enabled mode with a total of 0
 let eval  = eval' true 0
 
+// evaluate the full input
 input
 |> parse
 |> eval
