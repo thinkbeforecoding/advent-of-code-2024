@@ -1,3 +1,6 @@
+// --- Day 19: Linen Layout ---
+// https://adventofcode.com/2024/day/19
+
 open System
 let lines = IO.File.ReadAllLines("input/day19.txt")
 let towels = lines[0].Split(", ")

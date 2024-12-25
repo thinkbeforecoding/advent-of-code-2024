@@ -1,3 +1,6 @@
+// --- Day 25: Code Chronicle ---
+// https://adventofcode.com/2024/day/25
+
 open System
 
 // split text by double line ending

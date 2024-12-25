@@ -1,3 +1,6 @@
+// --- Day 11: Plutonian Pebbles ---
+// https://adventofcode.com/2024/day/11
+
 open System
 let input =
     IO.File.ReadAllText("input/day11.txt").Split(' ', StringSplitOptions.RemoveEmptyEntries)

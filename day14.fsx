@@ -1,3 +1,6 @@
+// --- Day 14: Restroom Redoubt ---
+// https://adventofcode.com/2024/day/14
+
 open System
 
 let rx = Text.RegularExpressions.Regex @"p=(?<px>\d+),(?<py>\d+) v=(?<vx>-?\d+),(?<vy>-?\d+)"

@@ -1,3 +1,5 @@
+// --- Day 7: Bridge Repair ---
+// https://adventofcode.com/2024/day/7
 open System
 
 // convert each line as a pair of total and list of values

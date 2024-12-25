@@ -1,3 +1,6 @@
+// --- Day 8: Resonant Collinearity ---
+// https://adventofcode.com/2024/day/8
+
 open System
 // read the map, once again as a flat string
 let map = IO.File.ReadAllText("input/day08.txt").ReplaceLineEndings("\n")

@@ -1,15 +1,7 @@
+// --- Day 4: Ceres Search ---
+// https://adventofcode.com/2024/day/4
+
 open System
-// let input = 
-//     """MMMSXXMASM
-// MSAMXMSMSA
-// AMXSXMAAMM
-// MSAMASMSMX
-// XMASAMXAMM
-// XXAMMXXAMA
-// SMSMSASXSS
-// SAXAMASAAA
-// MAMMMXMMMM
-// MXMXAXMASX""".Split("\n")
 
 // Read the full file as a string
 let input = IO.File.ReadAllText("input/day04.txt").ReplaceLineEndings("\n")

@@ -1,3 +1,6 @@
+// --- Day 21: Keypad Conundrum ---
+// https://adventofcode.com/2024/day/21
+
 open System
 let codes =
     IO.File.ReadAllLines("input/day21.txt")
@@ -24,6 +27,7 @@ let remotePos c =
     | '<' -> 0,0
     | 'v' -> 1, 0
     | '>' -> 2, 0
+    | _ -> failwith "Invalid char"
 
 // the coordinates of the gap on remote pad
 let remoteGap = 0,1

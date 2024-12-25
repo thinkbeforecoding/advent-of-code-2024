@@ -1,3 +1,6 @@
+// --- Day 2: Red-Nosed Reports ---
+// https://adventofcode.com/2024/day/2
+
 open System
 
 // parse input as array of int[]
