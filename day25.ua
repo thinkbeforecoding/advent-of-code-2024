@@ -3,10 +3,10 @@
 # indicates if key (first line is dots)
 🗝️ ← ≍ "....." ⊢
 # count '#' by column -1 to get heights
-📊 ← -1/+(=@#)
+📊 ← -1/+=@#
 # separate keys and locks
-⊃(▽ ⊸≡🗝️) (▽ ⊸≡(¬ 🗝️))
+⊃(▽⊸≡🗝️) (▽⊸≡(¬🗝️))
 # convert both to heights
-∩(≡📊)
+∩≡📊
 # take all combinations, add heights and check if all are <= 5, sum all
-/+ ♭ ⊞(/↧ ≤5 +)
+/+♭ ⊞(/↧ ≤5 +)
